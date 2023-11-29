@@ -10,10 +10,9 @@ class AdminPanelMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        // dd(auth()->user()->role_id);
-        if(auth()->user()->role_id !== 2 && auth()->user()->role_id !== 3){
+        if (!isset(auth()->user()->role_id) || (auth()->user()->role_id !== 2 && auth()->user()->role_id !== 3)) {
             return redirect()->route('home');
         }
-        return $next($request);
+        // return $next($request);
     }
 }

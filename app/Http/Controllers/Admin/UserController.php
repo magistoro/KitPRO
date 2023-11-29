@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\User\StoreRequest;
+use App\Http\Requests\User\UpdateRequest;
 use App\Models\Category;
 use App\Models\Role;
 use App\Models\User;
@@ -43,7 +45,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(StoreRequest $request)
     {
         //
     }
@@ -51,7 +53,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user, Role $role)
+    public function show(User $user)
     {
         return view('admin.user.show', compact('user'));
     }
@@ -67,7 +69,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateRequest $request, Product $product)
     {
         //
     }

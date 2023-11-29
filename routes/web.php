@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\CategoryController;
 
 use App\Http\Controllers\Admin\UserController as AdminUserController;
-use App\Http\Controllers\Admin\RolerController as AdminRoleController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TypeController as AdminTypeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Auth\HomeController as AuthController;
@@ -45,13 +45,13 @@ Route::get('/catalog/{category:slug}/{product:slug}', [ProductController::class,
 
     
 
-// Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin.')->group(function() {
-  Route::group([
-    'middleware' => 'admin',
-    'prefix' => 'admin',
-    'namespace' => 'App\Http\Controllers\Admin',
-    'as' => 'admin.',
-  ], function () {
+Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin.')->group(function() {
+//   Route::group([
+//     'middleware' => 'admin',
+//     'prefix' => 'admin',
+//     'namespace' => 'App\Http\Controllers\Admin',
+//     'as' => 'admin.',
+//   ], function () {
       
     Route::get('/', [AdminIndexController::class, 'index'])->name('index');
 
@@ -107,17 +107,19 @@ Route::get('/catalog/{category:slug}/{product:slug}', [ProductController::class,
 
     Route::prefix('role')->namespace('App\Http\Controllers\Admin')->name('role.')->group(function() {
         // products Index (Admin)
-        Route::get('/', [AdminRoleController::class, 'index'])->name('index');
+        Route::get('/', [RoleController::class, 'index'])->name('index');
         // products Create
-        Route::get('/create', [AdminRoleController::class, 'create'])->name('create');
+        Route::get('/create', [RoleController::class, 'create'])->name('create');
         // products Store
-        Route::post('/', [AdminRoleController::class, 'store'])->name('store');
+        Route::post('/', [RoleController::class, 'store'])->name('store');
         // products Edit 
-        Route::get('/{product:slug}/edit', [AdminRoleController::class, 'edit'])->name('edit');
+        Route::get('/{role}/edit', [RoleController::class, 'edit'])->name('edit');
+
+        Route::get('/{role}', [RoleController::class, 'show'])->name('show');
         // products Update
-        Route::patch('/{product:slug}', [AdminRoleController::class, 'update'])->name('update');
+        Route::patch('/{role}', [RoleController::class, 'update'])->name('update');
         // products Destroy 
-        Route::delete('/{product:slug}', [AdminRoleController::class, 'destroy'])->name('destroy');
+        Route::delete('/{role}', [RoleController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('type')->namespace('App\Http\Controllers\Admin')->name('type.')->group(function() {

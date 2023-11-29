@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
-use App\Models\Category;
+use App\Http\Requests\Role\StoreRequest;
+use App\Http\Requests\Role\UpdateRequest;
+use App\Models\Role;
 use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
@@ -24,56 +23,50 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $categories = collect();         
-
-        Category::chunk(200, function ($records) use (&$categories) {
-            $categories = $categories->concat($records);
-        });
-
-        $categories = Category::whereIsLeaf()->get();
-        // dd($categories);
-
-        return view('admin.category.create', ['categories' => $categories]);
+        return view('admin.role.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(StoreRequest $request)
     {
         //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category, Product $product)
-    {
-        $breadcrumbs = Category::ancestorsAndSelf($category->id)->toArray();
-        return view('product.show', ['category' => $category, 'product' => $product, 'breadcrumbs' => $breadcrumbs]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+
+    public function show(Role $role)
     {
-        //
+        return view('admin.role.show', compact('role'));
+    }
+
+    public function edit(Role $role)
+    {
+        $role = Role::all();
+        return view('admin.role.edit', compact('role'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateRequest $request, Role $role)
     {
-        //
+          // Получаем валидированные данные из формы
+          $data = $request->validated(); 
+
+          $role->update($data);
+          return redirect()->route('admin.role.show', $role->id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(Role $role)
     {
-        //
+        $role->delete();
+        return redirect()->route('admin.role.index');
     }
 }
