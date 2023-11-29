@@ -1,0 +1,8 @@
+@use '../main' as *;
+
+.product {
+
+    &__body{
+        padding-top: 24px;
+    }
+}

@@ -1,0 +1,10 @@
+.no-sort::before, .no-sort::after {
+  content: none !important;
+}
+.no-sort-text {
+  pointer-events: none;
+}
+th.no-sort {
+  pointer-events: none !important;
+  cursor: default !important;
+}
