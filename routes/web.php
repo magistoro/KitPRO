@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TypeController as AdminTypeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Auth\HomeController as AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -44,9 +45,6 @@ Route::get('/catalog/{category:slug}/{product:slug}', [ProductController::class,
     ->name('products.show');
 
 
-    
-
-// Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin.')->group(function() {
   Route::group([
     'middleware' => 'admin',
     'prefix' => 'admin',
@@ -139,6 +137,8 @@ Route::get('/catalog/{category:slug}/{product:slug}', [ProductController::class,
     });
 });
 
+
+Route::get('/cart', [CartController::class, 'index'])->name('cartIndex');
 
 Auth::routes();
 

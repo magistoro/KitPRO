@@ -77,9 +77,7 @@
                         </ul>
                         <?php endif; ?>
 
-                        <a href="<?php echo e(route('logout')); ?>" 
-                        onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();"
+                        <a href="<?php echo e(route('cartIndex')); ?>" 
                         class="btn btn-normal btn-primary cart-btn"><img src="/img/header/shopping-cart.svg" alt="">Корзина</a> 
                      <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
                          <?php echo csrf_field(); ?>

@@ -77,9 +77,7 @@
                         </ul>
                         @endif
 
-                        <a href="{{ route('logout') }}" 
-                        onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();"
+                        <a href="{{ route('cartIndex') }}" 
                         class="btn btn-normal btn-primary cart-btn"><img src="/img/header/shopping-cart.svg" alt="">Корзина</a> 
                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                          @csrf
