@@ -211,12 +211,14 @@
             </a>
           </li> 
           
+          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view', auth()->user())): ?>
           <li class="nav-item">
             <a href="<?php echo e(route('admin.role.index')); ?>" class="nav-link">
               <i class="nav-icon fas fa-user-tag"></i>
               <p>Роли доступа</p>
             </a>
           </li>
+          <?php endif; ?>
       </nav>
       <!-- /.sidebar-menu -->
     </div>

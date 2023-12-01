@@ -11,4 +11,9 @@ class HomeController extends Controller
     {
         return view('auth');
     }
+    public function profile()
+    {
+        return view('API.profile');
+    }
 }
+

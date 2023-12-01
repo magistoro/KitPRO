@@ -42,6 +42,8 @@
                     </div>
     
                     <nav class="header__nav nav">
+                        <?php if(auth()->user()): ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('UserView', auth()->user())): ?>
                         <ul>
                             <li><a class="btn btn-normal btn-primary btn-primary--active" href="#">Главная</a></li>
                             <li><a class="btn btn-normal btn-primary " href="<?php echo e(route('categories.index', ['category'=> 'prodazha'])); ?>">Продажа</a></li>
@@ -51,14 +53,34 @@
                             <li><a class="btn btn-normal btn-primary " href="#">О нас</a></li>
                             <li><a class="btn btn-normal btn-primary " href="#">Контакты</a></li>
                         </ul>
-                        
-                        <a class="dropdown-item" href="<?php echo e(route('logout')); ?>"
+                        <?php endif; ?>
+
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('AdminView', auth()->user())): ?>
+                        <ul>
+                            <li><a class="btn btn-normal btn-primary btn-primary--active" href="#">Главная</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="<?php echo e(route('categories.index', ['category'=> 'prodazha'])); ?>">Продажа</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="<?php echo e(route('categories.index', ['category'=> 'arenda'])); ?>">Аренда</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="#">Корпоративные условия</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="#">Наша команда</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="#">Корпоративная этика</a></li>
+                        </ul>
+                        <?php endif; ?>    
+                        <?php else: ?>
+                        <ul>
+                            <li><a class="btn btn-normal btn-primary btn-primary--active" href="#">Главная</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="<?php echo e(route('categories.index', ['category'=> 'prodazha'])); ?>">Продажа</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="<?php echo e(route('categories.index', ['category'=> 'arenda'])); ?>">Аренда</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="#">Прайс</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="#">Условия аренды</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="#">О нас</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="#">Контакты</a></li>
+                        </ul>
+                        <?php endif; ?>
+
+                        <a href="<?php echo e(route('logout')); ?>" 
                         onclick="event.preventDefault();
-                                      document.getElementById('logout-form').submit();">
-                         <?php echo e(__('Logout')); ?>
-
-                     </a>
-
+                        document.getElementById('logout-form').submit();"
+                        class="btn btn-normal btn-primary cart-btn"><img src="/img/header/shopping-cart.svg" alt="">Корзина</a> 
                      <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
                          <?php echo csrf_field(); ?>
                      </form>

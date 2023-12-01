@@ -34,7 +34,8 @@ Route::get('/',  function(){
 Route::get('/home', [IndexController::class, 'index'])->name('home');
 
 // login
-Route::get('/login', [AuthController::class, 'index'])->name('auth');
+Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+
 
 Route::get('/catalog/{category:slug}', [CategoryController::class, 'index']) // тут изменил
     ->name('categories.index');
@@ -45,13 +46,13 @@ Route::get('/catalog/{category:slug}/{product:slug}', [ProductController::class,
 
     
 
-Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin.')->group(function() {
-//   Route::group([
-//     'middleware' => 'admin',
-//     'prefix' => 'admin',
-//     'namespace' => 'App\Http\Controllers\Admin',
-//     'as' => 'admin.',
-//   ], function () {
+// Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin.')->group(function() {
+  Route::group([
+    'middleware' => 'admin',
+    'prefix' => 'admin',
+    'namespace' => 'App\Http\Controllers\Admin',
+    'as' => 'admin.',
+  ], function () {
       
     Route::get('/', [AdminIndexController::class, 'index'])->name('index');
 

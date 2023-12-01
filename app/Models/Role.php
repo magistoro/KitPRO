@@ -15,9 +15,22 @@ class Role extends Model
     protected $fillable = [
         'name',
     ];
+    
+    
+    public static function getAdminRoleID(){
+        return self::where('name', 'admin')->first()->id;
+    } 
+    public static function getManagerRoleID(){
+        return self::where('name', 'manager')->first()->id;
+    } 
+    public static function getUserRoleID(){
+        return self::where('name', 'user')->first()->id;
+    }
 
     public function products():HasMany
     {
         return $this->hasMany(User::class);
     }
+
+
 }

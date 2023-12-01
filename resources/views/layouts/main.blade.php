@@ -42,6 +42,8 @@
                     </div>
     
                     <nav class="header__nav nav">
+                        @if (auth()->user())
+                        @can('UserView', auth()->user())
                         <ul>
                             <li><a class="btn btn-normal btn-primary btn-primary--active" href="#">Главная</a></li>
                             <li><a class="btn btn-normal btn-primary " href="{{ route('categories.index', ['category'=> 'prodazha']) }}">Продажа</a></li>
@@ -51,16 +53,34 @@
                             <li><a class="btn btn-normal btn-primary " href="#">О нас</a></li>
                             <li><a class="btn btn-normal btn-primary " href="#">Контакты</a></li>
                         </ul>
-                        {{-- <a href="{{ route('logout') }}" 
+                        @endcan
+
+                        @can('AdminView', auth()->user())
+                        <ul>
+                            <li><a class="btn btn-normal btn-primary btn-primary--active" href="#">Главная</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="{{ route('categories.index', ['category'=> 'prodazha']) }}">Продажа</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="{{ route('categories.index', ['category'=> 'arenda']) }}">Аренда</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="#">Корпоративные условия</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="#">Наша команда</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="#">Корпоративная этика</a></li>
+                        </ul>
+                        @endcan    
+                        @else
+                        <ul>
+                            <li><a class="btn btn-normal btn-primary btn-primary--active" href="#">Главная</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="{{ route('categories.index', ['category'=> 'prodazha']) }}">Продажа</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="{{ route('categories.index', ['category'=> 'arenda']) }}">Аренда</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="#">Прайс</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="#">Условия аренды</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="#">О нас</a></li>
+                            <li><a class="btn btn-normal btn-primary " href="#">Контакты</a></li>
+                        </ul>
+                        @endif
+
+                        <a href="{{ route('logout') }}" 
                         onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();"
-                        class="btn btn-normal btn-primary cart-btn"><img src="/img/header/shopping-cart.svg" alt="">Корзина</a>  --}}
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                                      document.getElementById('logout-form').submit();">
-                         {{ __('Logout') }}
-                     </a>
-
+                        class="btn btn-normal btn-primary cart-btn"><img src="/img/header/shopping-cart.svg" alt="">Корзина</a> 
                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                          @csrf
                      </form>

@@ -211,12 +211,14 @@
             </a>
           </li> 
           
+          @can('view', auth()->user())
           <li class="nav-item">
             <a href="{{route('admin.role.index')}}" class="nav-link">
               <i class="nav-icon fas fa-user-tag"></i>
               <p>Роли доступа</p>
             </a>
           </li>
+          @endcan
       </nav>
       <!-- /.sidebar-menu -->
     </div>
