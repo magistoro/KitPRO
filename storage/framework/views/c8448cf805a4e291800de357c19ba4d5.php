@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    
+
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
@@ -156,10 +156,6 @@
                 </div>
             </div>
         </footer>
-
-
     </div>
-    
-
 </body>
 <?php /**PATH C:\Users\maksi\Desktop\Мои_сайты\kitprotv\resources\views/layouts/main.blade.php ENDPATH**/ ?>

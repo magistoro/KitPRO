@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->uuid('id')->primary();
         
-            $table->foreignUuid('user_id')
+            $table->foreignUuid('user_id')->nullable()
             ->constrained('users')
             ->cascadeOnDelete()
-            ->restrictOnUpdate();
+            ->restrictOnUpdate()
+            ;
 
             $table->timestamps();
         });

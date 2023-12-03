@@ -139,6 +139,7 @@ Route::get('/catalog/{category:slug}/{product:slug}', [ProductController::class,
 
 
 Route::get('/cart', [CartController::class, 'index'])->name('cartIndex');
+Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
 
 Auth::routes();
 
