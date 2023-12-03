@@ -6,6 +6,60 @@
         <div class="home__body">
           <h1>Корзина</h1>
           
+          <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            @if ($cartItems->count() > 0)
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($cartItems as $item)
+                                            <tr>
+                                                <td>
+                                                    <img src="Content/Product/thumbnails/{{ $item->product->thumbnail }}" alt="{{ $item->product->name }}" width="50px" height="50px">
+                                                </td>
+                                                <td>{{ $item->product->name }}</td>
+                                                <td>{{ $item->product->price }}</td>
+                                                <td>
+                                                    <form action="{{ route('cart.update', $item->id) }}" method="POST" class="d-flex">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="number" name="quantity" value="{{ $item->quantity }}" min="1" class="form-control" style="width: 60px; margin-left:10px">
+                                                        <button type="submit" class="btn btn-sm btn-primary ml-2">Update</button>
+                                                    </form>
+                                                </td>
+                                                <td>{{ $item->product->price * $item->quantity }}</td>
+                                                <td>
+                                                    <form action="{{ route('cart.destroy', $item->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <p>No items in the cart.</p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         </div>
     </div>
 </section>

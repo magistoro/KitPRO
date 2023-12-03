@@ -13,60 +13,65 @@ class CartController extends Controller
 {
 
     public function index(){
-        return view('API.cart');
+        $cartItems = collect();
+
+        // Проверяем, вошел ли пользователь в аккаунт
+        if (Auth::check()) {
+            // Ищем корзину для зарегистрированного пользователя
+            $cart = Cart::where('user_id', Auth::user()->id)->first();
+    
+            if ($cart) {
+                // Получаем все элементы корзины
+                $cartItems = CartItem::where('cart_id', $cart->id)->with('product')
+                ->get();
+        }
+    } else {
+        // Проверяем наличие куки cart_id
+        if (request()->hasCookie('cart_id')) {
+            $cartId = request()->cookie('cart_id');
+
+            // Поиск записи в таблице Cart по cart_id
+            $cart = Cart::where('id', $cartId)->first();
+
+            if ($cart) {
+                // Получаем все элементы корзины
+                $cartItems = CartItem::where('cart_id', $cart->id)
+                    ->with('product')
+                    ->get();
+            }
+        }
     }
 
+        return view('API.cart', compact('cartItems'));
+    }
+
+
+    public function update(Request $request, $id)
+{
+    $cartItem = CartItem::findOrFail($id);
+
+    // Валидация введенного значения quantity
+    $request->validate([
+        'quantity' => 'required|integer|min:1',
+    ]);
+
+    // Обновление значения quantity
+    $cartItem->quantity = $request->quantity;
+    $cartItem->save();
+
+    return redirect()->back();
+}
+
+public function destroy($id)
+{
+    $cartItem = CartItem::findOrFail($id);
+    $cartItem->delete();
+
+    return redirect()->back();
+}
+
+
     public function addToCart(Request $request){
-
-        // Начало старого кода
-    //    $cart_id = $request->cookie('cart_id'); // Получаем cart_id из кук
-    //     // Проверяем наличие куки корзины у пользователя
-       
-    //     if (!$request->hasCookie('cart_id')) {
-       
-    //         $cart = new Cart();
-    //         $cart_id =$cart->id = Uuid::uuid4()->toString(); 
-
-    //         $cart->save();
-
-
-    //         $product = Product::where('id', $request->id)->first();
-    //         $cartItem = CartItem::where('cart_id', $cart_id)->where('product_id', $product->id)->first();
-    
-    //             CartItem::create([
-    //             'cart_id' => $cart_id,
-    //             'product_id' => $product->id,
-    //             'quantity' => 1
-    //         ]);
-            
-    //         // Устанавливаем ID корзины в качестве куки
-    //         return response()->json(['message' => 'Товар ' .$cart_id. ' добавлен в корзину'])->cookie('cart_id', $cart_id);      
-    //     }
-
-
-    //     // Создание записи в таблице cart_items
-    //     $product = Product::where('id', $request->id)->first();
-    //     $cartItem = CartItem::where('cart_id', $cart_id)->where('product_id', $product->id)->first();
-
-    //     if($cartItem) {
-    //      $cartItem->quantity += 1;
-    //         $cartItem->save();
-    //     } else {
-    //         CartItem::create([
-    //         'cart_id' => $cart_id,
-    //         'product_id' => $product->id,
-    //         'quantity' => 1
-    //     ]);
-    //     }
-
-
-    //     $id = $request->input('id');
-    //     $message = "Товар ". $cart_id." добавлен в корзину";
-    //     return response()->json($message);
-        // Конец старого кода
-
-       
-        // Проверяем, авторизован ли пользователь
        
        // Проверяем, авторизован ли пользователь
         if (Auth::check()) {
@@ -143,11 +148,5 @@ class CartController extends Controller
 
             return response()->json($message);
         }
-
-
-
-
-
-
     }
 }

@@ -141,5 +141,8 @@ Route::get('/catalog/{category:slug}/{product:slug}', [ProductController::class,
 Route::get('/cart', [CartController::class, 'index'])->name('cartIndex');
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
 
+Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+
 Auth::routes();
 
