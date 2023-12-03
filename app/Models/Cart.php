@@ -13,6 +13,8 @@ class Cart extends Model
 
     protected $table = 'carts';
 
+    protected $keyType = 'string';
+
     protected $fillable = [
        
     ];
