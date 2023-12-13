@@ -52,7 +52,7 @@ class CategoryController extends Controller
         $parent->children()->save($category); 
 
        
-        return redirect()->route('admin.category.index');
+        return redirect()->route('admin.category.index')->with('success', $data['name']);
     }
 
     /**

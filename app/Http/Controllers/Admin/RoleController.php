@@ -15,7 +15,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $this->authorize('view', auth()->user());
+        $this->authorize('AdminView', auth()->user());
         return view('admin.role.index', ['roles' => DB::table('roles')->paginate(8)]);
     }
 

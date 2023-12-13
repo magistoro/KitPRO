@@ -13,6 +13,9 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+
+    //  ДЛЯ РАБОТЫ С БЛЕЙДАМИ
     public function index(Category $category)
     {
         $children = $category->children->toArray();
@@ -25,6 +28,7 @@ class CategoryController extends Controller
         $products = $category->products()->with('type')->get();
         return view('product.index', ['category' => $category, 'products' => $products, 'breadcrumbs' => $breadcrumbs]);
     }
+
 
     /**
      * Show the form for creating a new resource.

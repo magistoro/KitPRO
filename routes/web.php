@@ -35,7 +35,7 @@ Route::get('/',  function(){
 Route::get('/home', [IndexController::class, 'index'])->name('home');
 
 // login
-Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+Route::get('/profile', [AuthController::class, 'profile'])->name('profile')->middleware('auth.redirect');
 
 
 Route::get('/catalog/{category:slug}', [CategoryController::class, 'index']) // тут изменил
@@ -137,12 +137,21 @@ Route::get('/catalog/{category:slug}/{product:slug}', [ProductController::class,
     });
 });
 
-
+// Корзина
 Route::get('/cart', [CartController::class, 'index'])->name('cartIndex');
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
 
 Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+
+// Оформление заказа
+Route::get('/orderBuy', [CartController::class, 'orderBuy'])->name('orderBuy');
+Route::get('/orderRent', [CartController::class, 'orderRent'])->name('orderRent');
+
+// Чек аут
+Route::post('/orderBuy', [CartController::class, 'orderBuyCheckout'])->name('orderBuyCheckout');
+
+
 
 Auth::routes();
 

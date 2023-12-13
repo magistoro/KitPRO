@@ -75,13 +75,22 @@
                             <li><a class="btn btn-normal btn-primary " href="#">О нас</a></li>
                             <li><a class="btn btn-normal btn-primary " href="#">Контакты</a></li>
                         </ul>
+                        <a href="<?php echo e(route('cartIndex')); ?>" 
+                        class="btn btn-normal btn-primary cart-btn"><img src="/img/header/shopping-cart.svg" alt="">Корзина</a> 
                         <?php endif; ?>
 
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('UserView', auth()->user())): ?>
                         <a href="<?php echo e(route('cartIndex')); ?>" 
                         class="btn btn-normal btn-primary cart-btn"><img src="/img/header/shopping-cart.svg" alt="">Корзина</a> 
                      <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
                          <?php echo csrf_field(); ?>
                      </form>
+                     <?php endif; ?>
+
+                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('AdminView', auth()->user())): ?>
+                     <a href="<?php echo e(route('admin.index')); ?>" 
+                     class="btn btn-normal btn-primary cart-btn"><img src="/img/header/shopping-cart.svg" alt="">Админка</a> 
+                  <?php endif; ?>
                     </nav>  
                 </div>
             </div>

@@ -25,11 +25,18 @@
    
    <link rel="stylesheet" href="<?php echo e(asset('adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')); ?>">
    <link rel="stylesheet" href="<?php echo e(asset('adminlte/plugins/datatables-select/css/select.bootstrap4.min.css')); ?>">
+
+   
+   <link rel="stylesheet" href="<?php echo e(asset('adminlte/plugins/chart.js/Chart.min.css')); ?>">
+
+    
+    <link rel="stylesheet" href="<?php echo e(asset('adminlte/plugins/sweetalert2/sweetalert2.min.css')); ?>">
    
    <link rel="stylesheet" href="<?php echo e(asset('adminlte/plugins/datatables-searchpanes/css/searchPanes.bootstrap4.min.css')); ?>">
    <link rel="stylesheet" href="<?php echo e(asset('adminlte/plugins/datatables-searchbuilder/css/searchBuilder.bootstrap4.min.css')); ?>">
 
 </head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
@@ -51,6 +58,13 @@
     <ul class="navbar-nav ml-auto">
 
       <!-- Messages Dropdown Menu -->
+      <li class="nav-item">
+        <a class="nav-link" href="#" id="theme-toggle" role="button">
+            <i class="fas fa-th-large"></i>
+        </a>
+      </li>
+
+
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-comments"></i>
@@ -170,15 +184,38 @@
 
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
+         <li class="nav-item">
+          <a href="#" class="nav-link active">
+            <i class="nav-icon fas fa-shopping-bag"></i>
+            <p>Заказы<i class="right fas fa-angle-left"></i></p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="./index.html" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Продажа</p>
+            </a>
+            </li>
           <li class="nav-item">
-            
-            <a href="pages/gallery.html" class="nav-link">
-                <i class="nav-icon fas fa-shopping-bag"></i>
-              <p>Заказы</p>
+            <a href="./index2.html" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Аренда</p>
             </a>
           </li>
-
+          <li class="nav-item">
+            <a href="./index3.html" class="nav-link secondary">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Новые</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="./index3.html" class="nav-link active">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Завершённые</p>
+            </a>
+          </li>
+          </ul>
+        </li>
 
           <li class="nav-item">
             
@@ -195,8 +232,6 @@
             </a>
           </li>
 
-         
-
           <li class="nav-item">
             <a href="<?php echo e(route('admin.type.index')); ?>" class="nav-link">
               <i class="nav-icon fas fa-tags"></i>
@@ -211,7 +246,7 @@
             </a>
           </li> 
           
-          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view', auth()->user())): ?>
+          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('AdminView', auth()->user())): ?>
           <li class="nav-item">
             <a href="<?php echo e(route('admin.role.index')); ?>" class="nav-link">
               <i class="nav-icon fas fa-user-tag"></i>
@@ -274,6 +309,14 @@
 <script src="<?php echo e(asset('adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')); ?>"></script>
 
 
+<script src="<?php echo e(asset('adminlte/plugins/chart.js/Chart.bundle.min.js')); ?>"></script>
+<script src="<?php echo e(asset('adminlte/plugins/chart.js/Chart.min.js')); ?>"></script>
+
+
+
+<script src="<?php echo e(asset('adminlte/plugins/sweetalert2/sweetalert2.all.min.js')); ?>"></script>
+
+
 <!-- DataTablesSelect -->
 <script src="<?php echo e(asset('adminlte/plugins/datatables-select/js/dataTables.select.min.js')); ?>"></script>
 
@@ -317,6 +360,40 @@
         searchPanes: true
       });
     }
+
+    // const btn = document.querySelector('.nav-link');
+    //     const body = document.querySelector('body');
+    //     const navbar = document.querySelector('.navbar');
+
+    //     // btn.addEventListener('click', function()
+    //     document.getElementById('theme-toggle').addEventListener('click', function() {
+    //         body.classList.toggle('dark-mode');
+    //         navbar.classList.toggle('navbar-white');
+    //         navbar.classList.toggle('navbar-dark');
+    //     });
+
+
+        const btn = document.querySelector('.nav-link');
+        const body = document.querySelector('body');
+        const navbar = document.querySelector('.navbar');
+
+        // Проверяем, есть ли сохраненное значение темы в localStorage
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            body.classList.add(currentTheme);
+            navbar.classList.toggle('navbar-white', currentTheme === 'light-mode');
+            navbar.classList.toggle('navbar-dark', currentTheme === 'dark-mode');
+        }
+
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            body.classList.toggle('dark-mode');
+            navbar.classList.toggle('navbar-white');
+            navbar.classList.toggle('navbar-dark');
+
+            // Сохраняем выбранную тему в localStorage
+            localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark-mode' : 'light-mode');
+        });
+
 </script>
 </body>
 </html>

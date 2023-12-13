@@ -75,13 +75,22 @@
                             <li><a class="btn btn-normal btn-primary " href="#">О нас</a></li>
                             <li><a class="btn btn-normal btn-primary " href="#">Контакты</a></li>
                         </ul>
+                        <a href="{{ route('cartIndex') }}" 
+                        class="btn btn-normal btn-primary cart-btn"><img src="/img/header/shopping-cart.svg" alt="">Корзина</a> 
                         @endif
 
+                        @can('UserView', auth()->user())
                         <a href="{{ route('cartIndex') }}" 
                         class="btn btn-normal btn-primary cart-btn"><img src="/img/header/shopping-cart.svg" alt="">Корзина</a> 
                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                          @csrf
                      </form>
+                     @endcan
+
+                     @can('AdminView', auth()->user())
+                     <a href="{{ route('admin.index') }}" 
+                     class="btn btn-normal btn-primary cart-btn"><img src="/img/header/shopping-cart.svg" alt="">Админка</a> 
+                  @endcan
                     </nav>  
                 </div>
             </div>

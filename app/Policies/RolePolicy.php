@@ -45,53 +45,17 @@ class RolePolicy
      */
     public function UserView(User $user, User $model): bool
     {
-    
         // return  ($model->role_id === Role::getUserRoleID()) ;
         return $model->role_id === Role::getUserRoleID();
     }
 
     public function AdminView(User $user, User $model): bool
     {
-        return $model->role_id === Role::getAdminRoleID() || $model->role_id === Role::getManagerRoleID();
+        return $model->role_id === Role::getAdminRoleID();
     }
 
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user)
+    public function ManagerView(User $user, User $model): bool
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, User $model)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, User $model)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, User $model)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, User $model)
-    {
-        //
+        return $model->role_id === Role::getManagerRoleID();
     }
 }

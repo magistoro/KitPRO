@@ -84,7 +84,7 @@ class RegisterController extends Controller
             if ($cart) {
                 $cart->user_id = $user->id;
                 $cart->save();
-                $cookie = Cookie::forget('cart_id');
+                Cookie::forget('cart_id');
             }
         }
 
