@@ -6,7 +6,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Продукт</h1>
+          <h1 class="m-0">Пользователь</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -45,14 +45,17 @@
                 <td>ID</td>
                 <td><?php echo e($user->id); ?></td>
             </tr>
+
             <tr>
-              <td>Наименование</td>
+              <td>Имя</td>
               <td><?php echo e($user->name); ?></td>
             </tr>
 
+            
+
             <tr>
-              <td>Транскрипция</td>
-              <td><?php echo e($user->slug); ?></td>
+              <td>Уровень допуска</td>
+              <td><?php echo e($user->role->name); ?></td>
             </tr>
 
             

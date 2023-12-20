@@ -86,7 +86,17 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $categories = collect();         
+
+        Category::chunk(200, function ($records) use (&$categories) {
+            $categories = $categories->concat($records);
+        });
+
+        $categories = Category::whereIsLeaf()->get();
+
+        $types = Type::all();
+
+        return view('admin.product.edit', compact('product', 'categories', 'types'));
     }
 
     /**

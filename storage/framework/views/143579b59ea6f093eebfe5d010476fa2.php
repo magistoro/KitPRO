@@ -58,37 +58,6 @@
     </section>
   <!-- /.content -->
   
-  <script>
-  document.addEventListener("DOMContentLoaded", function() {
-       // Проверить наличие флеш-сообщения для успеха
-       var successMessage = '<?php echo e(session('success')); ?>';
-            if (successMessage) {
-                // Показать SweetAlert2
-                Swal.fire({
-                    title: `Категория "${successMessage}" успешно добавлена`,
-                    icon: 'success',
-                    timer: 3000,
-                    position: 'top-end', // изменить положение на правый верхний угол
-                    toast: true, // включить режим toast
-                    showConfirmButton: false // скрыть кнопку "Ок"
-                });
-            }
-
-            // Проверить наличие флеш-сообщения об ошибке
-            var errorMessage = '<?php echo e(session('error')); ?>';
-            if (errorMessage) {
-                // Показать SweetAlert2
-                Swal.fire({
-                    title: 'Что-то пошло не так(',
-                    text: errorMessage,
-                    icon: 'error',
-                    timer: 3000,
-                    position: 'top-end', // изменить положение на правый верхний угол
-                    toast: true, // включить режим toast
-                    showConfirmButton: false // скрыть кнопку "Ок"
-                });
-            }
-    });
-</script>
 <?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.statusPopUp', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\maksi\Desktop\Мои_сайты\kitprotv\resources\views/admin/category/index.blade.php ENDPATH**/ ?>

@@ -122,6 +122,13 @@
         <div class="card-header border-0">
         <h3 class="card-title">Купленные товары</h3>
         <div class="card-tools">
+
+          <button id="refreshButton"  type="button" class="btn btn-tool" 
+          {{-- data-card-widget="card-refresh" data-source="widgets.html" data-source-selector="#card-refresh-content" --}}
+          >
+            <i class="fas fa-sync-alt"></i>
+          </button>
+
             <button type="button" class="btn btn-tool" data-card-widget="collapse">
             <i class="fas fa-minus"></i>
             </button>
@@ -177,7 +184,7 @@
         </table>
         </div>
         <div class="card-footer text-center">
-            <a href="javascript:void(0)" class="uppercase">Продукты для продажи</a>
+            <a href="{{route('admin.order.rent.create')}}" class="uppercase">Продукты для продажи</a>
             </div>
         </div>
        
@@ -248,7 +255,7 @@
             <tr>
             <th>Продукт</th>
             <th>Цена</th>
-            <th>Аренд</th>
+            <th>Аренда</th>
             <th></th>
             </tr>
             </thead>
@@ -256,7 +263,7 @@
             <tbody>
            
 
-            @foreach ($bestSellingProducts as $product)
+            @foreach ($bestRentingProducts as $product)
             <tr>
                 <td>
                     <img src="/Content/product/thumbnails/{{ $product->thumbnail }}" alt="{{ $product->name }}" class="img-circle img-size-32 mr-2">
@@ -272,7 +279,7 @@
                     {{ $product->total_sales }} Rent
                 </td>
                 <td>
-                    <a href="#" class="text-muted">
+                    <a href="{{ route('admin.products.show', $product->id) }}" class="text-muted">
                         <i class="fas fa-search"></i>
                     </a>
                 </td>
@@ -284,7 +291,7 @@
             </table>
             </div>
             <div class="card-footer text-center">
-                <a href="javascript:void(0)" class="uppercase">Продукты для аренды</a>
+                <a href="{{route('admin.user.create')}}" class="uppercase">Продукты для аренды</a>
                 </div>
             </div>
 
@@ -305,7 +312,7 @@
         </div>
         <div class="card">
             <div class="card-header border-transparent">
-            <h3 class="card-title">Latest Orders</h3>
+            <h3 class="card-title">Последние заказы</h3>
             <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse">
             <i class="fas fa-minus"></i>

@@ -47,7 +47,11 @@
                                                 </td>
                                                 <td>{{ $item->product->price * $item->quantity }}</td>
                                                 <td>
-                                                   <!-- Код действия удаления для "Купить" -->
+                                                    <form action="{{ route('cart.destroy', $item->id) }}" method="POST" class="d-flex">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-sm btn-primary ml-2">Удалить</button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -87,7 +91,11 @@
                                                 </td>
                                                 <td>{{ $item->product->price * $item->quantity }}</td>
                                                 <td>
-                                                   <!-- Код действия удаления для "Арендовать" -->
+                                                    <form action="{{ route('cart.destroy', $item->id) }}" method="POST" class="d-flex">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-sm btn-primary ml-2">Удалить</button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         @endforeach

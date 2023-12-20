@@ -30,16 +30,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        $categories = collect();         
+        $users = User::all();
+        $roles = Role::all();
 
-        User::chunk(200, function ($records) use (&$categories) {
-            $categories = $categories->concat($records);
-        });
-
-        $users = User::whereIsLeaf()->get();
-        // dd($categories);
-
-        return view('admin.user.create', ['users' => $users]);
+        return view('admin.user.create', ['users' => $users, 'roles' => $roles]);
     }
 
     /**

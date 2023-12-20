@@ -47,7 +47,11 @@
                                                 </td>
                                                 <td><?php echo e($item->product->price * $item->quantity); ?></td>
                                                 <td>
-                                                   <!-- Код действия удаления для "Купить" -->
+                                                    <form action="<?php echo e(route('cart.destroy', $item->id)); ?>" method="POST" class="d-flex">
+                                                        <?php echo csrf_field(); ?>
+                                                        <?php echo method_field('delete'); ?>
+                                                        <button type="submit" class="btn btn-sm btn-primary ml-2">Удалить</button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -87,7 +91,11 @@
                                                 </td>
                                                 <td><?php echo e($item->product->price * $item->quantity); ?></td>
                                                 <td>
-                                                   <!-- Код действия удаления для "Арендовать" -->
+                                                    <form action="<?php echo e(route('cart.destroy', $item->id)); ?>" method="POST" class="d-flex">
+                                                        <?php echo csrf_field(); ?>
+                                                        <?php echo method_field('delete'); ?>
+                                                        <button type="submit" class="btn btn-sm btn-primary ml-2">Удалить</button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

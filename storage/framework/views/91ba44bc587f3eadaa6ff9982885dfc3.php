@@ -122,6 +122,13 @@
         <div class="card-header border-0">
         <h3 class="card-title">Купленные товары</h3>
         <div class="card-tools">
+
+          <button id="refreshButton"  type="button" class="btn btn-tool" 
+          
+          >
+            <i class="fas fa-sync-alt"></i>
+          </button>
+
             <button type="button" class="btn btn-tool" data-card-widget="collapse">
             <i class="fas fa-minus"></i>
             </button>
@@ -177,7 +184,7 @@
         </table>
         </div>
         <div class="card-footer text-center">
-            <a href="javascript:void(0)" class="uppercase">Продукты для продажи</a>
+            <a href="<?php echo e(route('admin.order.rent.create')); ?>" class="uppercase">Продукты для продажи</a>
             </div>
         </div>
        
@@ -248,7 +255,7 @@
             <tr>
             <th>Продукт</th>
             <th>Цена</th>
-            <th>Аренд</th>
+            <th>Аренда</th>
             <th></th>
             </tr>
             </thead>
@@ -256,7 +263,7 @@
             <tbody>
            
 
-            <?php $__currentLoopData = $bestSellingProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php $__currentLoopData = $bestRentingProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
                 <td>
                     <img src="/Content/product/thumbnails/<?php echo e($product->thumbnail); ?>" alt="<?php echo e($product->name); ?>" class="img-circle img-size-32 mr-2">
@@ -272,7 +279,7 @@
                     <?php echo e($product->total_sales); ?> Rent
                 </td>
                 <td>
-                    <a href="#" class="text-muted">
+                    <a href="<?php echo e(route('admin.products.show', $product->id)); ?>" class="text-muted">
                         <i class="fas fa-search"></i>
                     </a>
                 </td>
@@ -284,7 +291,7 @@
             </table>
             </div>
             <div class="card-footer text-center">
-                <a href="javascript:void(0)" class="uppercase">Продукты для аренды</a>
+                <a href="<?php echo e(route('admin.user.create')); ?>" class="uppercase">Продукты для аренды</a>
                 </div>
             </div>
 
@@ -305,7 +312,7 @@
         </div>
         <div class="card">
             <div class="card-header border-transparent">
-            <h3 class="card-title">Latest Orders</h3>
+            <h3 class="card-title">Последние заказы</h3>
             <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse">
             <i class="fas fa-minus"></i>

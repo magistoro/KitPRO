@@ -57,37 +57,5 @@
     </table></div></div></div></div></div></div></div></div>
     </section>
   <!-- /.content -->
-  
-  <script>
-  document.addEventListener("DOMContentLoaded", function() {
-       // Проверить наличие флеш-сообщения для успеха
-       var successMessage = '{{ session('success') }}';
-            if (successMessage) {
-                // Показать SweetAlert2
-                Swal.fire({
-                    title: `Категория "${successMessage}" успешно добавлена`,
-                    icon: 'success',
-                    timer: 3000,
-                    position: 'top-end', // изменить положение на правый верхний угол
-                    toast: true, // включить режим toast
-                    showConfirmButton: false // скрыть кнопку "Ок"
-                });
-            }
-
-            // Проверить наличие флеш-сообщения об ошибке
-            var errorMessage = '{{ session('error') }}';
-            if (errorMessage) {
-                // Показать SweetAlert2
-                Swal.fire({
-                    title: 'Что-то пошло не так(',
-                    text: errorMessage,
-                    icon: 'error',
-                    timer: 3000,
-                    position: 'top-end', // изменить положение на правый верхний угол
-                    toast: true, // включить режим toast
-                    showConfirmButton: false // скрыть кнопку "Ок"
-                });
-            }
-    });
-</script>
+  @extends('layouts.statusPopUp')
 @endsection

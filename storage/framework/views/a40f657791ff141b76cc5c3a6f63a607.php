@@ -42,13 +42,13 @@
           </div>
 
           <div class="form-group">
-            <select name="parent_id" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+            <select name="parent_id" class="form-control category type  select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
               <option selected="selected" disabled data-select2-id="">Выберите категорию</option>
-              <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $categoryy): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-              <option value="<?php echo e($categoryy->id); ?>" <?php echo e($category->parent_id == $categoryy->id ? 'selected' : ''); ?>><?php echo e($categoryy->name); ?></option>                
+              <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+              <option value="<?php echo e($category->id); ?>"><?php echo e($category->name); ?></option>                
               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </select>
-          </div>
+              </select>
+            </div>
 
           <div class="form-group">
             <input type="submit" class="btn btn-primary" value="Редактировать">

@@ -5,12 +5,23 @@
     <div class="_container">
         <div class="home__body">
           <h1>Профиль</h1>
-          <a class="dropdown-item" href="<?php echo e(route('logout')); ?>"
-          onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-           <?php echo e(__('Logout')); ?>
+          
 
-       </a>
+
+
+
+       <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+            <?php echo csrf_field(); ?>
+        </form>
+    
+        <a class="dropdown-item" href="<?php echo e(route('logout')); ?>"
+            onclick="event.preventDefault();
+                     document.getElementById('logout-form').submit();">
+            <?php echo e(__('Loggout')); ?>
+
+        </a>
+
+        
         </div>
     </div>
 </section>

@@ -66,4 +66,6 @@
     </table></div></div></div></div></div></div></div></div>
     </section>
   <!-- /.content -->
+
+  @extends('layouts.statusPopUp')
 @endsection

@@ -52,7 +52,7 @@ class CategoryController extends Controller
         $parent->children()->save($category); 
 
        
-        return redirect()->route('admin.category.index')->with('success', $data['name']);
+        return redirect()->route('admin.category.index')->with('success', 'Категория '.$category['name'].' успешно добавлена!');
     }
 
     /**
@@ -102,7 +102,7 @@ class CategoryController extends Controller
          // Обновление данных продукта
          $category->update($data);
  
-         return redirect()->route('admin.category.show', $category->id);
+         return redirect()->route('admin.category.show', $category->id)->with('success', 'Категория '.$category['name'].' успешно обновлена!');
     }
 
     /**
@@ -111,6 +111,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('admin.category.index');
+        return redirect()->route('admin.category.index')->with('success',  'Категория '.$category['name'].' успешно удалена!');
     }
 }

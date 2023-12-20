@@ -88,4 +88,5 @@
     </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
+  @extends('layouts.statusPopUp')
 @endsection

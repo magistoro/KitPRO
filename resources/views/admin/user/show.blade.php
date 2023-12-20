@@ -6,7 +6,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Продукт</h1>
+          <h1 class="m-0">Пользователь</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -45,14 +45,30 @@
                 <td>ID</td>
                 <td>{{$user->id}}</td>
             </tr>
+
             <tr>
-              <td>Наименование</td>
+              <td>Имя</td>
+              <td>{{$user->name}}</td>
+            </tr>
+
+            {{-- <tr>
+              <td>Имя</td>
               <td>{{$user->name}}</td>
             </tr>
 
             <tr>
-              <td>Транскрипция</td>
-              <td>{{$user->slug}}</td>
+              <td>Имя</td>
+              <td>{{$user->name}}</td>
+            </tr>
+
+            <tr>
+              <td>Имя</td>
+              <td>{{$user->name}}</td>
+            </tr> --}}
+
+            <tr>
+              <td>Уровень допуска</td>
+              <td>{{$user->role->name}}</td>
             </tr>
 
             

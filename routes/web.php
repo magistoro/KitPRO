@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+// use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
-
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\CategoryController;
 
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -135,6 +136,47 @@ Route::get('/catalog/{category:slug}/{product:slug}', [ProductController::class,
         // products Destroy 
         Route::delete('/{product:slug}', [AdminTypeController::class, 'destroy'])->name('destroy');
     });
+
+
+
+    // Route::prefix('order')->namespace('App\Http\Controllers\Admin')->name('order.')->group(function() {
+    //     Route::prefix('sale')->namespace('App\Http\Controllers\Admin')->name('sale.')->group(function() {
+    //     // products Index (Admin)
+    //     Route::get('/', [AdminOrderController::class, 'index'])->name('index');
+    //     // products Create
+    //     Route::get('/create', [AdminOrderController::class, 'create'])->name('create');
+    //     // products Store
+    //     Route::post('/', [AdminOrderController::class, 'store'])->name('store');
+    //     // products Edit 
+    //     Route::get('/{order}/edit', [AdminOrderController::class, 'edit'])->name('edit');
+    //     Route::get('/{order}', [AdminOrderController::class, 'show'])->name('show');
+    //     // products Update
+    //     Route::patch('/{order}', [AdminOrderController::class, 'update'])->name('update');
+    //     // products Destroy 
+    //     Route::delete('/{order}', [AdminOrderController::class, 'destroy'])->name('destroy');
+    //     });
+
+    //     Route::prefix('rent')->namespace('App\Http\Controllers\Admin')->name('rent.')->group(function() {
+    //         // products Index (Admin)
+    //         Route::get('/', [AdminOrderController::class, 'index'])->name('index');
+    //         // products Create
+    //         Route::get('/create', [AdminOrderController::class, 'create'])->name('create');
+    //         // products Store
+    //         Route::post('/', [AdminOrderController::class, 'store'])->name('store');
+    //         // products Edit 
+    //         Route::get('/{order}/edit', [AdminOrderController::class, 'edit'])->name('edit');
+    //         Route::get('/{order}', [AdminOrderController::class, 'show'])->name('show');
+    //         // products Update
+    //         Route::patch('/{order}', [AdminOrderController::class, 'update'])->name('update');
+    //         // products Destroy 
+    //         Route::delete('/{order}', [AdminOrderController::class, 'destroy'])->name('destroy');
+    //         });
+    // });
+
+    Route::prefix('order')->namespace('App\Http\Controllers\Admin')->name('order.')->group(function() {
+        Route::resource('sale', OrderController::class)->except(['index']);
+        Route::resource('rent', OrderController::class)->except(['index']);
+    }); 
 });
 
 // Корзина
