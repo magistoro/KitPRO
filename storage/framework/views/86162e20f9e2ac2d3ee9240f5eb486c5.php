@@ -100,7 +100,6 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>   
 <script>
 $(document).ready(function() {
-    // $('#phone').mask('+7 (999) 999-99-99');
 
     $('#submitBtn').click(function() {
         var name = $('#name').val();

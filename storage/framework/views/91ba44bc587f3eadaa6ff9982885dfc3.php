@@ -118,7 +118,7 @@
         </div>
         </div>
         
-        <div class="card">
+        <div class="card collapsed-card">
         <div class="card-header border-0">
         <h3 class="card-title">Купленные товары</h3>
         <div class="card-tools">
@@ -184,7 +184,7 @@
         </table>
         </div>
         <div class="card-footer text-center">
-            <a href="<?php echo e(route('admin.order.rent.create')); ?>" class="uppercase">Продукты для продажи</a>
+            <a href="<?php echo e(route('admin.rent.create')); ?>" class="uppercase">Продукты для продажи</a>
             </div>
         </div>
        
@@ -228,7 +228,7 @@
         </div>
         </div>
         
-        <div class="card">
+        <div class="card collapsed-card">
             <div class="card-header border-0">
             <h3 class="card-title">Арендованные товары</h3>
             <div class="card-tools">
@@ -310,108 +310,161 @@
 
         
         </div>
-        <div class="card">
-            <div class="card-header border-transparent">
-            <h3 class="card-title">Последние заказы</h3>
-            <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-            <i class="fas fa-minus"></i>
-            </button>
-            <div class="btn-group">
-                <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-wrench"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right" role="menu" style="">
-                <a href="#" class="dropdown-item">Action</a>
-                <a href="#" class="dropdown-item">Another action</a>
-                <a href="#" class="dropdown-item">Something else here</a>
-                <a class="dropdown-divider"></a>
-                <a href="#" class="dropdown-item">Separated link</a>
-                </div>
-                </div>
-            </div>
-            </div>
-            
-            <div class="card-body p-0">
-            <div class="table-responsive">
-            <table class="table m-0">
-            <thead>
-            <tr>
-            <th>Order ID</th>
-            <th>Item</th>
-            <th>Status</th>
-            <th>Popularity</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-            <td><a href="pages/examples/invoice.html">OR9842</a></td>
-            <td>Call of Duty IV</td>
-            <td><span class="badge badge-success">Shipped</span></td>
-            <td>
-            <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-            </td>
-            </tr>
-            <tr>
-            <td><a href="pages/examples/invoice.html">OR1848</a></td>
-            <td>Samsung Smart TV</td>
-            <td><span class="badge badge-warning">Pending</span></td>
-            <td>
-            <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-            </td>
-            </tr>
-            <tr>
-            <td><a href="pages/examples/invoice.html">OR7429</a></td>
-            <td>iPhone 6 Plus</td>
-            <td><span class="badge badge-danger">Delivered</span></td>
-            <td>
-            <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-            </td>
-            </tr>
-            <tr>
-            <td><a href="pages/examples/invoice.html">OR7429</a></td>
-            <td>Samsung Smart TV</td>
-            <td><span class="badge badge-info">Processing</span></td>
-            <td>
-            <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-            </td>
-            </tr>
-            <tr>
-            <td><a href="pages/examples/invoice.html">OR1848</a></td>
-            <td>Samsung Smart TV</td>
-            <td><span class="badge badge-warning">Pending</span></td>
-            <td>
-            <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-            </td>
-            </tr>
-            <tr>
-            <td><a href="pages/examples/invoice.html">OR7429</a></td>
-            <td>iPhone 6 Plus</td>
-            <td><span class="badge badge-danger">Delivered</span></td>
-            <td>
-            <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-            </td>
-            </tr>
-            <tr>
-            <td><a href="pages/examples/invoice.html">OR9842</a></td>
-            <td>Call of Duty IV</td>
-            <td><span class="badge badge-success">Shipped</span></td>
-            <td>
-            <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-            </td>
-            </tr>
-            </tbody>
-            </table>
-            </div>
-            
-            </div>
-            
-            <div class="card-footer clearfix">
-            <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Place New Order</a>
-            <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a>
-            </div>
-            
-            </div>
+        
+        <div class="card collapsed-card">
+          <div class="card-header border-transparent">
+              <h3 class="card-title">Последние покупки</h3>
+              <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                  </button>
+                  <div class="btn-group">
+                      <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-wrench"></i>
+                      </button>
+                      <div class="dropdown-menu dropdown-menu-right" role="menu" style="">
+                          <a href="#" class="dropdown-item">Action</a>
+                          <a href="#" class="dropdown-item">Another action</a>
+                          <a href="#" class="dropdown-item">Something else here</a>
+                          <a class="dropdown-divider"></a>
+                          <a href="#" class="dropdown-item">Separated link</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      
+          <div class="card-body p-0">
+              <div class="table-responsive">
+                  <table class="table m-0">
+                      <thead>
+                          <tr>
+                              <th>ID</th>
+                              <th>Имя</th>
+                              <th>Телефон</th>
+                              <th>Статус</th>
+                              <th>Общая цена</th>
+                              <th></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <?php $__currentLoopData = $recentSoldOrders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $soldOrder): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                          <tr>
+                              <td><a href="#"><?php echo e($soldOrder->id); ?></a></td>
+                              <td><?php echo e($soldOrder->customer_to); ?></td>
+                              <td><?php echo e($soldOrder->customer_phone); ?></td>
+
+                              <td>
+                                  <?php if($soldOrder->status === 'Получено'): ?>
+                                      <span class="badge badge-success"><?php echo e($soldOrder->status); ?></span>
+                                  <?php elseif($soldOrder->status === 'Отправлено'): ?>
+                                      <span class="badge badge-warning"><?php echo e($soldOrder->status); ?></span>
+                                  <?php elseif($soldOrder->status === 'Собран'): ?>
+                                      <span class="badge badge-danger"><?php echo e($soldOrder->status); ?></span>
+                                  <?php else: ?>
+                                      <span class="badge badge-info"><?php echo e($soldOrder->status); ?></span>
+                                  <?php endif; ?>
+                              </td>
+                              <td>
+                                  <div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo e($soldOrder->total_price); ?></div>
+                              </td>
+                              <td>
+                                <a  onclick="window.location='<?php echo e(route('admin.sale.show', $soldOrder->id)); ?>';" class="text-muted">
+                                    <i class="fas fa-search"></i>
+                                </a>
+                               
+                            </td>
+                          </tr>
+                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      
+          <div class="card-footer clearfix">
+              <!-- Футер карты (неизменен) -->
+          </div>
+      
+      </div>
+      
+
+            <div class="card collapsed-card">
+              <div class="card-header border-transparent">
+              <h3 class="card-title">Последние аренды</h3>
+              <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+              <i class="fas fa-minus"></i>
+              </button>
+              <div class="btn-group">
+                  <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  <i class="fas fa-wrench"></i>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right" role="menu" style="">
+                  <a href="#" class="dropdown-item">Action</a>
+                  <a href="#" class="dropdown-item">Another action</a>
+                  <a href="#" class="dropdown-item">Something else here</a>
+                  <a class="dropdown-divider"></a>
+                  <a href="#" class="dropdown-item">Separated link</a>
+                  </div>
+                  </div>
+              </div>
+              </div>
+              
+              <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table m-0">
+                  <thead>
+                      <tr>
+                          <th>ID</th>
+                          <th>Имя</th>
+                          <th>Телефон</th>
+                          <th>Статус</th>
+                          <th>Общая цена</th>
+                          <th></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <?php $__currentLoopData = $recentRentOrders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rentOrder): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                      <tr>
+                          <td><a href="#"><?php echo e($rentOrder->id); ?></a></td>
+                          <td><?php echo e($rentOrder->customer_to); ?></td>
+                          <td><?php echo e($rentOrder->customer_phone); ?></td>
+
+                          <td>
+                              <?php if($rentOrder->status === 'Отменён'): ?>
+                              <span class="badge badge-warning"><?php echo e($rentOrder->status); ?></span>
+                              <?php elseif($rentOrder->status === 'Получено'): ?>
+                                  <span class="badge badge-success"><?php echo e($rentOrder->status); ?></span>
+                              <?php elseif($rentOrder->status === 'Отправлено'): ?>
+                                  <span class="badge badge-warning"><?php echo e($rentOrder->status); ?></span>
+                              <?php elseif($rentOrder->status === 'Собран'): ?>
+                                  <span class="badge badge-danger"><?php echo e($rentOrder->status); ?></span>
+                              <?php else: ?>
+                                  <span class="badge badge-info"><?php echo e($rentOrder->status); ?></span>
+                              <?php endif; ?>
+                          </td>
+                          <td>
+                              <div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo e($rentOrder->total_price); ?></div>
+                          </td>
+                          <td>
+                            <a onclick="window.location='<?php echo e(route('admin.sale.show', $rentOrder->id)); ?>';" class="text-muted">
+                                <i class="fas fa-search"></i><?php echo e($rentOrder->id); ?>
+
+                            </a>
+                        </td>
+                      </tr>
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                  </tbody>
+              </table>
+              </div>
+              
+              </div>
+              
+              <div class="card-footer clearfix">
+              <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Place New Order</a>
+              <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a>
+              </div>
+              
+              </div>
         </div>
 
         <script>
@@ -577,6 +630,47 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-        </script>
+
+
+
+// Система уведомлений
+function fetchNotifications() {
+    $.ajax({
+        url: '/admin/sale/notifications',
+        method: 'GET',
+        success: function(response) {
+            var html = response.html;
+            var hasNewNotifications = response.hasNewNotifications;
+
+            // Проверяем, есть ли новые заказы
+            if (hasNewNotifications && html.length > 0) {
+
+              alert(html);
+                Swal.fire({
+                    title: 'Новые заказы',
+                    html: html,
+                    showConfirmButton: false,
+                    position: 'top-end',
+                    toast: true,
+                    background: "#454d55",
+                    timer: 5000
+                });
+            }
+        }
+    });
+}
+
+setInterval(function() {
+    fetchNotifications();
+}, 5000); // Запрашивать уведомления каждые 5 секунд
+
+document.addEventListener("DOMContentLoaded", function() {
+    fetchNotifications();
+});
+
+
+
+
+    </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\maksi\Desktop\Мои_сайты\kitprotv\resources\views/admin/index.blade.php ENDPATH**/ ?>

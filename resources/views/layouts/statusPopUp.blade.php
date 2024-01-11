@@ -4,34 +4,77 @@ document.addEventListener("DOMContentLoaded", function() {
 const currentTheme = localStorage.getItem('theme');
 
 // Проверяем текущую тему
-if (currentTheme === 'dark-mode') {
-    // Добавьте CSS-класс всплывающему окну для темной темы
-    var successMessage = '{{ session('success') }}';
-    if (successMessage) {
-      Swal.fire({
-        title: `${successMessage}`,
-        icon: 'success',
-        timer: 3000,
-        position: 'top-end', // изменить положение на правый верхний угол
-        toast: true, // включить режим toast
-        showConfirmButton: false, // скрыть кнопку "Ок"
-        background: "#454d55",
-      });
+var successMessage = '{{ session('success') }}';
+var infoMessage = '{{ session('info') }}';
+var dangerMessage = '{{ session('danger') }}';
+
+if (successMessage) {
+  if (currentTheme === 'dark-mode') {
+    Swal.fire({
+      title: successMessage,
+      icon: 'success',
+      timer: 3000,
+      position: 'top-end',
+      toast: true,
+      showConfirmButton: false,
+      background: "#454d55",
+    });
+  } else {
+    Swal.fire({
+      title: successMessage,
+      icon: 'success',
+      timer: 3000,
+      position: 'top-end',
+      toast: true,
+      showConfirmButton: false
+    });
   }
- } else {
-    // Добавьте CSS-класс всплывающему окну для светлой темы
-    var successMessage = '{{ session('success') }}';
-      if (successMessage) {
-        // Показать SweetAlert2
-        Swal.fire({
-            title: `${successMessage}`,
-            icon: 'success',
-            timer: 3000,
-            position: 'top-end', // изменить положение на правый верхний угол
-            toast: true, // включить режим toast
-            showConfirmButton: false // скрыть кнопку "Ок"
-        });
-      }
+}
+
+if (infoMessage) {
+  if (currentTheme === 'dark-mode') {
+    Swal.fire({
+      title: infoMessage,
+      icon: 'info',
+      timer: 3000,
+      position: 'top-end',
+      toast: true,
+      showConfirmButton: false,
+      background: "#454d55",
+    });
+  } else {
+    Swal.fire({
+      title: infoMessage,
+      icon: 'info',
+      timer: 3000,
+      position: 'top-end',
+      toast: true,
+      showConfirmButton: false
+    });
+  }
+}
+
+if (dangerMessage) {
+  if (currentTheme === 'dark-mode') {
+    Swal.fire({
+      title: dangerMessage,
+      icon: 'error',
+      timer: 3000,
+      position: 'top-end',
+      toast: true,
+      showConfirmButton: false,
+      background: "#454d55",
+    });
+  } else {
+    Swal.fire({
+      title: dangerMessage,
+      icon: 'error',
+      timer: 3000,
+      position: 'top-end',
+      toast: true,
+      showConfirmButton: false
+    });
+  }
 }
 });
 </script>

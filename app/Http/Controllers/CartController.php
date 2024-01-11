@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Category;
+use App\Models\OrderRentProduct;
 use App\Models\OrderSoldProduct;
 use App\Models\Product;
+use App\Models\RentOrder;
 use App\Models\SoldOrder;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -153,6 +155,8 @@ class CartController extends Controller
     }
     
     public function orderRent(){
+        $user = auth()->user();
+
         $cartItems = $this->getCartItems();
     
         $rentItems = $this->filterItemsByCategory($cartItems, 2);
@@ -160,7 +164,11 @@ class CartController extends Controller
         if ($rentItems->isEmpty()) 
             return redirect()->route('cartIndex');
         
-        return view('API.orderRent', compact('rentItems'));
+
+        if (isset($user))
+            return view('API.orderRent', compact('rentItems', 'user'));
+        else
+            return view('API.orderRent', compact('rentItems'));
     }
     
     private function getCartItems(){
@@ -273,6 +281,76 @@ class CartController extends Controller
     return response()->json(['success' => 'Заказ успешно оформлен']);
 }
 
-    
-}
 
+
+    public function orderRentCheckout(Request $request){
+     // Инициализация переменных
+    $userId = null;
+    $cartId = null;
+
+    // Проверяем, зарегистрирован ли пользователь
+    if (Auth::check()) {
+        $user = Auth::user();
+        $userId = $user->id;
+        // dd($userId);
+    } else {
+        // Если пользователь не зарегистрирован, проверяем куки на наличие cart_id
+        $cartId = $request->cookie('cart_id');
+
+        // Если куки cart_id существует, то создаем пользователя с email из запроса и генерируем пароль
+        if ($cartId) {
+            $user = User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make(Str::random(8)),
+                'role_id' => '1'
+            ]);
+            $userId = $user->id;
+        } else {
+            // Если cart_id не существует в куках, возможно выполнить другую логику или вернуть ошибку
+            return response()->json(['error' => 'Не удалось найти пользователя или cart_id'], 400);
+        }
+    }
+
+    // Поиск корзины для пользователя
+    $cart = Cart::where(function ($query) use ($userId, $cartId) {
+        $query->where('user_id', $userId)
+            ->orWhere('id', $cartId);
+    })->first();
+
+    // Если корзины не существует, возможно выполнить другую логику или вернуть ошибку
+    if (!$cart) {
+        return response()->json(['error' => 'Корзина не найдена'], 404);
+    }
+
+    // Оформление аренды
+
+    $rentOrder = RentOrder::create([
+        'customer_to' => $request->input('name'),
+        'customer_phone' => $request->input('phone'),
+        'customer_email' => $request->input('email'),
+        'address' => $request->input('address'),
+        'comment' => $request->input('comment'),
+        'user_id' => $user->id,
+        'rent_start' => \Carbon\Carbon::createFromFormat('d.m.Y', $request->input('start_date'))->format('Y-m-d'),
+        'rent_end' => \Carbon\Carbon::createFromFormat('d.m.Y', $request->input('end_date'))->format('Y-m-d'),
+    ]);
+
+    // Обработка продуктов в корзине и их добавление в таблицу order_rent_products
+    $cartItems = CartItem::where('cart_id', $cart->id)->get();
+
+    foreach ($cartItems as $item) {
+        OrderRentProduct::create([
+            'rent_order_id' => $rentOrder->id,
+            'product_id' => $item->product_id,
+            'return_date' => null,
+        ]);
+    }
+
+    // Удаление всех позиций корзины пользователя
+    CartItem::where('cart_id', $cart->id)->delete();
+
+
+    return response()->json(['success' => 'Заказ аренды успешно оформлен']);
+}
+}

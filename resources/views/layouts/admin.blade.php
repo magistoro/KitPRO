@@ -191,7 +191,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="./index.html" class="nav-link">
+              <a href="{{route('admin.sale.index')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Продажа</p>
             </a>
@@ -328,8 +328,13 @@
 <!-- Select2 -->
 <script src="{{asset('adminlte/plugins/select2/js/select2.full.min.js')}}"></script>
 <script>
+  $('.tags').select2()
   $('.category').select2()
   $('.type').select2()
+
+  $('.dropdown-toggle').dropdown();
+
+
   // $('#cp-component').colorpicker()
   $("#is_published").bootstrapSwitch();
   autosize($('textarea.autosize'));
@@ -361,17 +366,7 @@
       });
     }
 
-    // const btn = document.querySelector('.nav-link');
-    //     const body = document.querySelector('body');
-    //     const navbar = document.querySelector('.navbar');
-
-    //     // btn.addEventListener('click', function()
-    //     document.getElementById('theme-toggle').addEventListener('click', function() {
-    //         body.classList.toggle('dark-mode');
-    //         navbar.classList.toggle('navbar-white');
-    //         navbar.classList.toggle('navbar-dark');
-    //     });
-
+    
 
         const btn = document.querySelector('.nav-link');
         const body = document.querySelector('body');

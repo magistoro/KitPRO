@@ -44,8 +44,8 @@
           <div class="form-group">
             <select name="parent_id" class="form-control category type  select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
               <option selected="selected" disabled data-select2-id="">Выберите категорию</option>
-              @foreach($categories as $category)
-              <option value="{{$category->id}}">{{$category->name}}</option>                
+              @foreach($categories as $categoryy)
+              <option value="{{$categoryy->id}}" {{$category->parent_id == $categoryy->id ? 'selected' : ''}}>{{$categoryy->name}}</option>                
               @endforeach
               </select>
             </div>

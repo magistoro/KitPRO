@@ -140,44 +140,50 @@ Route::get('/catalog/{category:slug}/{product:slug}', [ProductController::class,
 
 
     // Route::prefix('order')->namespace('App\Http\Controllers\Admin')->name('order.')->group(function() {
-    //     Route::prefix('sale')->namespace('App\Http\Controllers\Admin')->name('sale.')->group(function() {
-    //     // products Index (Admin)
-    //     Route::get('/', [AdminOrderController::class, 'index'])->name('index');
-    //     // products Create
-    //     Route::get('/create', [AdminOrderController::class, 'create'])->name('create');
-    //     // products Store
-    //     Route::post('/', [AdminOrderController::class, 'store'])->name('store');
-    //     // products Edit 
-    //     Route::get('/{order}/edit', [AdminOrderController::class, 'edit'])->name('edit');
-    //     Route::get('/{order}', [AdminOrderController::class, 'show'])->name('show');
-    //     // products Update
-    //     Route::patch('/{order}', [AdminOrderController::class, 'update'])->name('update');
-    //     // products Destroy 
-    //     Route::delete('/{order}', [AdminOrderController::class, 'destroy'])->name('destroy');
-    //     });
+        Route::prefix('sale')->namespace('App\Http\Controllers\Admin')->name('sale.')->group(function() {
+            // products Index (Admin)
+            Route::get('/', [OrderController::class, 'index'])->name('index');
 
-    //     Route::prefix('rent')->namespace('App\Http\Controllers\Admin')->name('rent.')->group(function() {
-    //         // products Index (Admin)
-    //         Route::get('/', [AdminOrderController::class, 'index'])->name('index');
-    //         // products Create
-    //         Route::get('/create', [AdminOrderController::class, 'create'])->name('create');
-    //         // products Store
-    //         Route::post('/', [AdminOrderController::class, 'store'])->name('store');
-    //         // products Edit 
-    //         Route::get('/{order}/edit', [AdminOrderController::class, 'edit'])->name('edit');
-    //         Route::get('/{order}', [AdminOrderController::class, 'show'])->name('show');
-    //         // products Update
-    //         Route::patch('/{order}', [AdminOrderController::class, 'update'])->name('update');
-    //         // products Destroy 
-    //         Route::delete('/{order}', [AdminOrderController::class, 'destroy'])->name('destroy');
-    //         });
-    // });
+            Route::get('/notifications', [OrderController::class, 'getNotifications'])->name('getNotifications');
+            // products Create
+            Route::get('/create', [OrderController::class, 'create'])->name('create');
+            // products Store
+            Route::post('/', [OrderController::class, 'store'])->name('store');
+            // products Edit 
+            Route::get('/{soldOrder}/edit', [OrderController::class, 'edit'])->name('edit');
+            
+            Route::get('/{soldOrder}', [OrderController::class, 'show'])->name('show');
 
-    Route::prefix('order')->namespace('App\Http\Controllers\Admin')->name('order.')->group(function() {
-        Route::resource('sale', OrderController::class)->except(['index']);
-        Route::resource('rent', OrderController::class)->except(['index']);
-    }); 
-});
+            Route::patch('/{soldOrder}/updateStatus', [OrderController::class, 'updateStatus'])->name('updateStatus');
+            
+            // products Update
+            Route::patch('/{soldOrder}', [OrderController::class, 'update'])->name('update');
+            // products Destroy 
+            Route::delete('/{soldOrder}', [OrderController::class, 'destroy'])->name('destroy');
+            });
+
+        Route::prefix('rent')->namespace('App\Http\Controllers\Admin')->name('rent.')->group(function() {
+            // products Index (Admin)
+            Route::get('/', [OrderController::class, 'index'])->name('index');
+            // products Create
+            Route::get('/create', [OrderController::class, 'create'])->name('create');
+            // products Store
+            Route::post('/', [OrderController::class, 'store'])->name('store');
+            // products Edit 
+            Route::get('/{order}/edit', [OrderController::class, 'edit'])->name('edit');
+            Route::get('/{order}', [OrderController::class, 'show'])->name('show');
+            // products Update
+            Route::patch('/{order}', [OrderController::class, 'update'])->name('update');
+            // products Destroy 
+            Route::delete('/{order}', [OrderController::class, 'destroy'])->name('destroy');
+            });
+    });
+
+    // Route::prefix('order')->namespace('App\Http\Controllers\Admin')->name('order.')->group(function() {
+    //     Route::resource('sale', OrderController::class)->except(['index']);
+    //     Route::resource('rent', OrderController::class)->except(['index']);
+    // }); 
+// });
 
 // Корзина
 Route::get('/cart', [CartController::class, 'index'])->name('cartIndex');
@@ -192,6 +198,7 @@ Route::get('/orderRent', [CartController::class, 'orderRent'])->name('orderRent'
 
 // Чек аут
 Route::post('/orderBuy', [CartController::class, 'orderBuyCheckout'])->name('orderBuyCheckout');
+Route::post('/orderRent', [CartController::class, 'orderRentCheckout'])->name('orderRentCheckout');
 
 
 

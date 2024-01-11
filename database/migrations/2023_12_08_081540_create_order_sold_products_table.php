@@ -31,6 +31,7 @@ return new class extends Migration
             ->default(0)
             ;
 
+            $table->timestamp('assembled_at')->nullable()->default(null);
             $table->timestamp('return_date')->nullable()->default(null);
 
             $table->timestamps();

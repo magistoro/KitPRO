@@ -21,7 +21,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-8 card">
                     <h3 class="cart-header">Данные по доставке</h3>
-                    <form id="orderForm"  action="{{ route('orderBuyCheckout') }}" method="POST">
+                    <form id="orderForm"  action="{{ route('orderRentCheckout') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="name">Имя</label>
@@ -34,7 +34,7 @@
                             <div class="input-group-prepend" >
                                 <span class="input-group-text h-100" style="border-radius: 5px 0 0 5px"><i class="fas fa-phone"></i></span>
                             </div>
-                            <input type="text" class="form-control h-100" data-inputmask="&quot;mask&quot;: &quot;(999) 999-9999&quot;" data-mask="" inputmode="text" name="phone">
+                            <input type="text" class="form-control h-100" data-inputmask="&quot;mask&quot;: &quot;(999) 999-9999&quot;" data-mask="" inputmode="text" id="phone" name="phone">
                             </div>
                             
                         </div>
@@ -63,7 +63,8 @@
                             </div>
                             
                         </div>
-
+                        <input type="hidden" id="start_date" name="start_date">
+                        <input type="hidden" id="end_date" name="end_date">
                     </form>
                 </div>
                 <div class="col-md-8  mt-3">
@@ -156,28 +157,36 @@
     });
 
     function calculateTotalPrice() {
-  var totalPrice = 0;
-  
-  // Получите значение выбранного диапазона дат
-  var startDate = $('#reservation').data('daterangepicker').startDate;
-  var endDate = $('#reservation').data('daterangepicker').endDate;
-  
-  // Получите количество дней между датами
-  var duration = moment.duration(endDate.diff(startDate)).asDays();
-  
-  // Пройдитесь по каждому товару и добавьте его стоимость за день умноженную на количество дней
-  @foreach ($rentItems as $item)
-    var pricePerDay = {{ $item->product->price }};
-    var quantity = {{ $item->quantity }};
-    var itemTotalPrice = Math.round(pricePerDay * quantity * duration / 10) * 10;
-    totalPrice += itemTotalPrice;
-  @endforeach
-  
-  // Отобразите общую стоимость и скидку
-  $('.total-price').text(totalPrice.toFixed(2));
-  $('.discount').text((totalPrice - Math.floor(totalPrice)).toFixed(2));
-}
-document.addEventListener("DOMContentLoaded", function() {
+        var totalPrice = 0;
+
+        // Получите значение выбранного диапазона дат
+        var startDate = $('#reservation').data('daterangepicker').startDate;
+        var endDate = $('#reservation').data('daterangepicker').endDate;
+
+        // Получите количество дней между датами
+        var duration = moment.duration(endDate.diff(startDate)).asDays();
+
+        // Пройдитесь по каждому товару и добавьте его стоимость за день умноженную на количество дней
+        @foreach ($rentItems as $item)
+          var pricePerDay = {{ $item->product->price }};
+          var quantity = {{ $item->quantity }};
+          var itemTotalPrice = Math.round(pricePerDay * quantity * duration / 10) * 10;
+          totalPrice += itemTotalPrice;
+        @endforeach
+
+        // Отобразите общую стоимость и скидку
+        $('.total-price').text(totalPrice.toFixed(2));
+        $('.discount').text((totalPrice - Math.floor(totalPrice)).toFixed(2));
+
+        // Получить значения дат начала и конца аренды
+        var startDate = $('#reservation').data('daterangepicker').startDate.format('DD.MM.YYYY');
+        var endDate = $('#reservation').data('daterangepicker').endDate.format('DD.MM.YYYY');
+
+        // Установить значения в скрытые input поля
+        $('#start_date').val(startDate);
+        $('#end_date').val(endDate);
+    }
+    document.addEventListener("DOMContentLoaded", function() {
     calculateTotalPrice();
 })
 
@@ -194,7 +203,7 @@ $('#submitBtn').click(function() {
             if (name === '') {
                 errorMessages.push('Пожалуйста, введите имя');
             }
-            if (phone === '') {
+            if (!phone) {
                 errorMessages.push('Пожалуйста, введите телефон');
             }
             if (email === '') {
@@ -203,7 +212,7 @@ $('#submitBtn').click(function() {
             if (address === '') {
                 errorMessages.push('Пожалуйста, введите адрес');
             }
-  displayErrorMessages(errorMessages);
+            displayErrorMessages(errorMessages);
                     return;
                 }
 

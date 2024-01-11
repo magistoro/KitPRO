@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('customer_phone', 255);
             $table->string('customer_email', 255);
             $table->string('address', 255);
-            $table->string('comment', 1024);
+            $table->string('comment', 1024)->nullable();
 
             $table->foreignUuid('user_id')->nullable()
             ->constrained('users')

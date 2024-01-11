@@ -29,7 +29,8 @@ return new class extends Migration
             $table->dateTime('assembled_at')->nullable()->default(null);
             $table->dateTime('dispatched_at')->nullable()->default(null);
             $table->dateTime('delivered_at')->nullable()->default(null);
-
+            $table->dateTime('cancelled_at')->nullable()->default(null);
+            
             $table->timestamps();
         });
     }

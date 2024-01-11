@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name', 55)
-                ->collation('utf8mb4_0900_ai_ci')
+                ->collation('utf8mb4_unicode_ci')
                 ->unique()
                 ;
             $table->string('slug')
                 ->unique()
                 ;
             $table->string('thumbnail', 191)
-                ->collation('utf8mb4_0900_ai_ci')
+                ->collation('utf8mb4_unicode_ci')
                 ->default('default.jpg')
                 ;
             $table->nestedSet();

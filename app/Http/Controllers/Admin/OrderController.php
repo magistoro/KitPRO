@@ -3,141 +3,155 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Product\StoreRequest;
-use App\Http\Requests\Product\UpdateRequest;
-use App\Models\Product;
-
-
+use App\Http\Requests\Sale\UpdateRequest;
 use App\Models\Category;
-use App\Models\Type;
-use Illuminate\Support\Facades\DB;
+use App\Models\OrderSoldProduct;
+use App\Models\Product;
+use App\Models\RentOrder;
+use App\Models\SoldOrder;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
+    $sold_orders = SoldOrder::with('orderSoldProducts.product')->get();
+       return view('admin.sale.index', compact('sold_orders'));
+    }
+
+    public function show(SoldOrder $soldOrder)
+    {
+        // dd($soldOrder);
+        $orderSoldProducts = $soldOrder->orderSoldProducts()->with('product')->get();
+        if ($soldOrder->cancelled_at) {
+            $soldOrder->status = 'Отменён';
+        } else if ($soldOrder->delivered_at) {
+            $soldOrder->status = 'Получено';
+        } elseif ($soldOrder->dispatched_at) {
+            $soldOrder->status = 'Отправлено';
+        } elseif ($soldOrder->assembled_at) {
+            $soldOrder->status = 'Собран';
+        } else {
+            $soldOrder->status = 'Новый';
+        }
+        return view('admin.sale.show', compact('soldOrder', 'orderSoldProducts'));
+    }
+
+    public function edit(SoldOrder $soldOrder)
+    {
+        $users = User::all();
         $products = Product::all();
-        $categories = Category::all();
-        return view('admin.product.index', compact('products', 'categories'));
+        $orderSoldProducts = $soldOrder->orderSoldProducts()->with('product')->get();
+        return view('admin.sale.edit', compact('soldOrder', 'orderSoldProducts', 'users', 'products'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function update(SoldOrder $soldOrder, UpdateRequest $request)
     {
-        $categories = collect();         
+        $data = $request->validated(); 
 
-        Category::chunk(200, function ($records) use (&$categories) {
-            $categories = $categories->concat($records);
-        });
+        $productData = $request->input('product_data');
+        $products = json_decode($productData, true);
 
-        $categories = Category::whereIsLeaf()->get();
+         // Если в заказе нет товаров, просто вернуться без внесения изменений
+        if (empty($products)) {
+        return redirect()->route('admin.sale.edit', $soldOrder)->with('info', 'Заказ не содержит товаров. Продолжить невозможно.');
+        }
+    
+          // Удаление старых продуктов через отношение
+        $soldOrder->orderSoldProducts()->delete();
 
-        $types = Type::all();
-        // dd($categories);
+        foreach ($products as $product) {
+            $orderSoldProduct = new OrderSoldProduct();
+            $orderSoldProduct->sold_order_id = $soldOrder->id;
+            $orderSoldProduct->product_id = $product['id'];
+            $orderSoldProduct->quantity = $product['quantity'];
+    
+            // Обновление значения поля assembled_at
+            if ($product['assembled']) {
+                $orderSoldProduct->assembled_at = now();
+            }
 
-        return view('admin.product.create', ['categories' => $categories, 'types' =>  $types]);
+            // $data = $request->validated();
+            $soldOrder->update($data);
+            $soldOrder->save();
+            $orderSoldProduct->save();
+        }
+
+    return redirect()->route('admin.sale.show', $soldOrder)->with('success', 'Заказ успешно обновлён!');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreRequest $request)
+
+    public function updateStatus(Request $request, SoldOrder $soldOrder)
     {
-        $data = $request->validated();
+        // Проверяем, что кнопка нажата
+        if ($request->has('status')) {
+            // Получаем новый статус из кнопки
+            $newStatus = $request->status;
 
-        // // Generating a new file name as file extension concatenated to current time (for uniqueness) 
-        $fileName = time() . '.' . $data['thumbnail']->getClientOriginalExtension();
-        // // moving file to public/images directory with new name
-        $data['thumbnail']->move(public_path('Content/Product/thumbnails'), $fileName);
+            // Обновляем соответствующую колонку в БД в зависимости от нового статуса
+            switch ($newStatus) {
+                case 'Собрано':
+                    $soldOrder->assembled_at = now();
+                    $soldOrder->dispatched_at = null;
+                    $soldOrder->delivered_at = null;
+                    $soldOrder->cancelled_at = null;
+                    break;
+                case 'Отправлено':
+                    // $soldOrder->assembled_at = now();
+                    $soldOrder->dispatched_at = now();
+                    $soldOrder->delivered_at = null;
+                    $soldOrder->cancelled_at = null;
+                    break;
+                case 'Получено':
+                    // $soldOrder->assembled_at = now();
+                    // $soldOrder->dispatched_at = now();
+                    $soldOrder->delivered_at = now();
+                    $soldOrder->cancelled_at = null;
+                    break;
+                case 'Отменён':
+                    // $soldOrder->assembled_at = null;
+                    // $soldOrder->dispatched_at = null;
+                    // $soldOrder->delivered_at = null;
+                    $soldOrder->cancelled_at = now();
+                    break;
 
+                default:
+                    // Если был передан неправильный статус, ничего не изменяем
+                    return redirect()->back();
+            }
 
+            // Сохраняем изменения в БД
+            $soldOrder->save();
+        }
 
-        $product = new Product($data);
-        $product->save();
-        $product -> thumbnail = $fileName;
-        $product -> update();
-     
-        // Product::firstOrCreate([
-        //     'name' => $data['name'],
-            
-        // ], $data); 
-       
-        return redirect()->route('admin.products.index');
+        // Перенаправляем на страницу с деталями заказа
+        return redirect()->route('admin.sale.show', $soldOrder)->with('success', 'Статус успешно сменен на '.$newStatus.'!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category, Product $product)
+
+
+
+    public function getNotifications(Request $request) // Для отправки уведомлений
     {
-        // $breadcrumbs = Category::ancestorsAndSelf($category->id)->toArray();
-        // return view('product.show', ['category' => $category, 'product' => $product, 'breadcrumbs' => $breadcrumbs]);
+        $notifications = SoldOrder::where('created_at', '>=', Carbon::now()->subSeconds(5))
+        ->orderBy('created_at', 'desc')
+        ->get();
 
-        return view('admin.product.show', compact('product'));
-    }
+    $html = view('layouts.notifications', compact('notifications'))->render();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Product $product)
-    {
-        $categories = collect();         
+    // return response()->json(['html' => $html]);
 
-        Category::chunk(200, function ($records) use (&$categories) {
-            $categories = $categories->concat($records);
-        });
 
-        $categories = Category::whereIsLeaf()->get();
+    // Проверяем, есть ли новые заказы
+    $hasNewNotifications = SoldOrder::where('created_at', '>=', Carbon::now()->subSeconds(5))
+        ->exists();
 
-        $types = Type::all();
+    // Получаем HTML-код для уведомлений
+    // $html = view('layouts.notifications')->render();
 
-        return view('admin.product.edit', compact('product', 'categories', 'types'));
-    }
+    return response()->json(['html' => $html, 'hasNewNotifications' => $hasNewNotifications]);
+}
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateRequest $request, Product $product)
-    {
-          // Получаем валидированные данные из формы
-          $data = $request->validated(); 
- 
-          // Удаление прошлой картинки и добавление новой
-         //  if ($data['preview_image'] ?? null) {
-         //      Storage::disk('public')->delete('/images/'.$product->preview_image); // удаление
-              
-         //      $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']); // добавление
-         //  }
-         //  else{
-         //      $data['preview_image'] = $product->preview_image; // оставляем существующую картинку
-         //  }
-  
-  
-         // Проверяем, есть ли новое значение parent_id в входных данных
-        //   if (isset($data['parent_id'])) {
-        //      // Если есть, найдем родительскую категорию
-        //      $parent = Category::find($data['parent_id']);
-        //      // Обновим родительскую связь
-        //      $category->parent()->associate($parent);
-        //  }
-        //  // dd($data);
-        //   // Обновление данных продукта
-        //   $category->update($data);
-  
-        //   return redirect()->route('admin.category.show', $category->id);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Product $product)
-    {
-        $product->delete();
-        return redirect()->route('admin.products.index');
-    }
 }

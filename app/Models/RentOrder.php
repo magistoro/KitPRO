@@ -15,6 +15,7 @@ class RentOrder extends Model
         'customer_email',
         'address',
         'comment',
+        'user_id',
         'rent_start',
         'rent_end',
         'delivered_at',
@@ -25,4 +26,9 @@ class RentOrder extends Model
         return $this->hasMany(OrderRentProduct::class, 'rent_order_id');
     }
 
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

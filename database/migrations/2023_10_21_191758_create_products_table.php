@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name', 255)
-                ->collation('utf8mb4_0900_ai_ci')
+                ->collation('utf8mb4_unicode_ci')
                 ->unique()
                 ->index()
                 ; 
@@ -22,17 +22,17 @@ return new class extends Migration
                 ->unique()
                 ;
             $table->text('description')
-                ->collation('utf8mb4_0900_ai_ci')
+                ->collation('utf8mb4_unicode_ci')
                 ;
             $table->decimal('price', 7, 2)
                 ->index()
                 ;
             $table->string('image', 191)
-                ->collation('utf8mb4_0900_ai_ci')
+                ->collation('utf8mb4_unicode_ci')
                 ->default('default.jpg')
                 ;
             $table->string('thumbnail', 191)
-                ->collation('utf8mb4_0900_ai_ci')
+                ->collation('utf8mb4_unicode_ci')
                 ->default('default.jpg')
                 ;
             $table->unsignedBigInteger('items_in_stock')
