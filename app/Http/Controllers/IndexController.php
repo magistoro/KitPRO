@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
+    // some changes
     // /**
     //  * Create a new controller instance.
     //  *
@@ -25,14 +26,14 @@ class IndexController extends Controller
     // {
     //     return view('home');
     // }
-    
+
   public function index()
     {
         return view('API.home');
     }
-} 
+}
 
 
 
-  
+
 
